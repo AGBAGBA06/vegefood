@@ -1,7 +1,8 @@
 
+
 @extends('layout.appt')
    @section('content')
-   <div class="hero-wrap hero-bread" style="background-image: url('frontend/images/bg_1.jpg');">
+   <div class="hero-wrap hero-bread" style="background-image: url('/frontend/images/bg_1.jpg');">
 	<div class="container">
 	  <div class="row no-gutters slider-text align-items-center justify-content-center">
 		<div class="col-md-9 ftco-animate text-center">
@@ -19,26 +20,27 @@
 				  <ul class="product-category">
 					  <li><a href="{{ URL::to('/shop') }}" class="{{ (request()->is('shop')? 
 					  'Active':'') }}">All</a></li>
-					  @foreach ($categorie as $categories)
-					  <li><a href="/select_by_cat/{{ $categories->category_name}}"  class="{{(request()
-					  ->is('/select_by_cat/'.$categories->category_name)? 'Active':'') }}">
-						{{ $categories->category_name}}</a></li>
+					  @foreach ($categories as $categorie)
+					  <li><a href="/select_by_cat/{{ $categorie->category_name}}"  class="{{(request()
+					  ->is('/select_by_cat/'.$categorie->category_name)? 'Active':'') }}">
+						{{ $categorie->category_name}}</a></li>
 					  @endforeach
 				  </ul>
 			  </div>
 		  </div>
 		  <div class="row">
+			@foreach ($product as $products)
 			  <div class="col-md-6 col-lg-3 ftco-animate">
 				  <div class="product">
-					  <a href="#" class="img-prod"><img class="img-fluid" src="frontend/images/product-1.jpg" alt="Colorlib Template">
+					  <a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $products->product_image }}"  alt="Colorlib Template">
 						  <span class="status">30%</span>
 						  <div class="overlay"></div>
 					  </a>
 					  <div class="text py-3 pb-4 px-3 text-center">
-						  <h3><a href="#">Bell Pepper</a></h3>
+						  <h3><a href="#">{{ $products->nom }}</a></h3>
 						  <div class="d-flex">
 							  <div class="pricing">
-								  <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span></p>
+								  <p class="price"><span class="mr-2 price-dc">$45</span><span class="price-sale">${{ $products->prix}}</span></p>
 							  </div>
 						  </div>
 						  <div class="bottom-area d-flex px-3">
@@ -46,7 +48,7 @@
 								  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 									  <span><i class="ion-ios-menu"></i></span>
 								  </a>
-								  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+								  <a href="/ajouter_au_panier/{{$products->id}}" class="buy-now d-flex justify-content-center align-items-center mx-1">
 									  <span><i class="ion-ios-cart"></i></span>
 								  </a>
 								  <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -57,7 +59,7 @@
 					  </div>
 				  </div>
 			  </div>
-		
+		@endforeach
 		  </div>
 		  <div class="row mt-5">
 		<div class="col text-center">

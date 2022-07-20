@@ -25,19 +25,19 @@ Produits
                         <th>image <br> du produit</th>
                         <th>nom de<br>  produit</th>
                         <th>prix<br>  du produit</th>
-                        {{-- <th>groupe</th>
-                        <th>email  <br> du produit</th> --}}
+                        <th>categorie</th>
                         <th>status <br> du produit</th>
                         <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($utilisateurs as $user)
+                    @foreach ($produits as $user)
                       <tr>
                         <td>{{$increment}}</td>
-                      <td><img src="storage/utilisateur_images/{{$user->utilisateur_image}}" alt=""></td>
+                      <td><img src="storage/product_images/{{$user->product_image}}" alt=""></td>
                       <td>{{$user->nom}}</td>
                       <td>{{$user->prix}}</td>
+                      <td>{{$user->product_category}}</td>
                       
                       <td>
                         @if ($user->status==1)
@@ -51,7 +51,7 @@ Produits
                         </td> --}}
                         <td>
                           <button class="btn btn-outline-primary" >
-                            <a href="{{url('/edit_produit/'.$user->id)}}"> edit</a></button>
+                            <a href="{{url('/editproduit/'.$user->id)}}"> edit</a></button>
                           <a href="{{url('/deleteproduit/'.$user->id)}}" id="delete" class="btn btn-outline-danger">Delete</a>
                         @if ($user->status==1)
                        <button class="btn btn-outline-warning" >
@@ -74,5 +74,5 @@ Produits
  
 @endsection
 @section('script')
-<script src="backend/js/data-table.js"></script>    
+{{-- <script src="backend/js/data-table.js"></script>     --}}
 @endsection

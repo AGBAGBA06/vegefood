@@ -37,33 +37,24 @@ Ajouter utilisateur
                     {{Form::number('prix','',['class'=>'form-control','id'=>'cprenom'])}}
                    </div>
 
-                    {{-- pour faire la selection des categorie d'element --}}
-                   {{-- <div class="form-group">
-                    {{Form::label('','groupe') }}
-                    {{Form::select('groupe_utilisateur',$categories,null,
-                    ['placeholder'=>'select groupe' ,'class'=>'form-control'])}}
-                   </div> --}}
+                     <div class="form-group">
+                    {{Form::label('','categorie du produit') }}
+                    {{Form::select('product_category',$categories,null,
+                    ['placeholder'=>'select category' ,'class'=>'form-control'])}}
+                   </div> 
 
 
+                
                    <div class="form-group">
                     {{Form::label('','status du produit',['for'=>'cstatus'])}}
                     {{Form::text('status','',['class'=>'form-control','id'=>'cstatus'])}}
                    </div>
-                  {{--<div class="form-group">
-                    <label for="cemail">E-Mail (required)</label>
-                    <input id="cemail" class="form-control" type="email" name="email" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="curl">URL (optional)</label>
-                    <input id="curl" class="form-control" type="url" name="url">
-                  </div>
-                  <div class="form-group">
-                    <label for="ccomment">Your comment (required)</label>
-                    <textarea id="ccomment" class="form-control" name="comment" required></textarea>
-                  </div>--}}
+
+                   
+                 
                   <div class="form-group">
                     {{Form::label('','image du produit',['for'=>'cname'])}}
-                    {{Form::file('utilisateur_image',['class'=>'form-control','id'=>'cname'])}}
+                    {{Form::file('product_image',['class'=>'form-control','id'=>'cname'])}}
                    </div> 
 
                   {{Form::submit('ajouter',['class'=>'btn btn-primary'])}}

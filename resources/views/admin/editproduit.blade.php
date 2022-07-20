@@ -7,7 +7,7 @@ Edit produit
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Edit produit</h4>
+              <h4 class="card-title">Editer produit</h4>
               
               @if (Session::has('status'))
                   <div class="alert alert-success">
@@ -26,43 +26,34 @@ Edit produit
                 {!!Form::open(['action'=>'App\Http\Controllers\PoductController@modifierproduit',
                   'method'=>'POST','class'=>'cmxform' ,'id'=>'commentForm'])!!}
                  {{ csrf_field() }}
-                 {{ Form::hidden ('id',$utilisateur->id) }}
+                 {{ Form::hidden ('id',$product->id) }}
 
                  <div class="form-group">
                    {{Form::label('','nom du produit',['for'=>'cname'])}}
-                   {{Form::text('nom',$utilisateur->nom,['class'=>'form-control','id'=>'cname'])}}
+                   {{Form::text('nom',$product->nom,['class'=>'form-control','id'=>'cname'])}}
                   </div>
                   
                   <div class="form-group">
                     {{Form::label('','prix du produit',['for'=>'cprenom'])}}
-                    {{Form::number('prix',$utilisateur->prix,['class'=>'form-control','id'=>'cprenom'])}}
+                    {{Form::number('prix',$product->prix,['class'=>'form-control','id'=>'cprenom'])}}
                    </div>
 
-                    {{-- pour faire la selection des categorie d'element --}}
-                   {{-- <div class="form-group">
+                   <div class="form-group">
                     {{Form::label('','categorie du produit') }}
-                    {{Form::select('groupe_utilisateur',$utilisateurs,$user->groupe_utilisateur,
-                    ['placeholder'=>'select groupe' ,'class'=>'form-control'])}}
-                   </div> --}}
+                    {{Form::select('product_category',$categories,$product->product_category,
+                    ['class'=>'form-control'])}}
+                   </div>
 
-                   {{-- <div class="form-group">
-                    {{Form::label('','mot de passe de l\'utilisateur',['for'=>'cpassword'])}}
-                    {{Form::text('mot_de_passe',$utilisateur->mot_de_passe,['class'=>'form-control','id'=>'cpassword'])}}
-                   </div> --}}
-
-                   {{-- <div class="form-group">
-                    {{Form::label('','email de l\'utilisateur',['for'=>'cemail'])}}
-                    {{Form::email('email',$utilisateur->email,['class'=>'form-control','id'=>'cemail'])}}
-                   </div> --}}
+                    
 
                    <div class="form-group">
                     {{Form::label('','status du produit',['for'=>'cstatus'])}}
-                    {{Form::number('status',$utilisateur->status,['class'=>'form-control','id'=>'cstatus'])}}
+                    {{Form::number('status',$product->status,['class'=>'form-control','id'=>'cstatus'])}}
                    </div>
                   
                   <div class="form-group">
                     {{Form::label('','image du produit',['for'=>'cname'])}}
-                    {{Form::file('utilisateur_image',['class'=>'form-control','id'=>'cname'])}}
+                    {{Form::file('product_image',['class'=>'form-control','id'=>'cname'])}}
                    </div> 
                   
                   {{Form::submit('modifier',['class'=>'btn btn-primary'])}}
@@ -72,7 +63,7 @@ Edit produit
             </div>
           </div>
         </div>
-     
+      
       </div>
 @endsection
 

@@ -22,7 +22,14 @@ Route::get('/shop','App\Http\Controllers\ClientController@shop');
 Route::get('/checkout','App\Http\Controllers\ClientController@checkout');
 Route::get('/login','App\Http\Controllers\ClientController@login');
 Route::get('/signup','App\Http\Controllers\ClientController@signup');
-Route::get('/sleect_by_cat/{name}','App\Http\Controllers\CategoryController@select_by_cat');
+Route::post('/creer_compte','App\Http\Controllers\ClientController@creer_compte');
+Route::post('/acceder_compte','App\Http\Controllers\ClientController@acceder_compte');
+Route::get('/select_by_cat/{name}','App\Http\Controllers\ClientController@select_by_cat');
+Route::get('/ajouter_au_panier/{id}','App\Http\Controllers\ClientController@ajouter_au_panier');
+Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
+Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
+Route::post('/payer','App\Http\Controllers\ClientController@payer');
+Route::get('/logout','App\Http\Controllers\ClientController@logout');
 
 
 Route::get('/admin','App\Http\Controllers\AdminController@dashboard');
@@ -39,7 +46,7 @@ Route::get('/deletecategorie/{id}','App\Http\Controllers\CategoryController@dele
 Route::get('/products','App\Http\Controllers\PoductController@products');
 Route::get('/ajouterproduit','App\Http\Controllers\PoductController@ajouterproduit');
 Route::post('/sauverproduit','App\Http\Controllers\PoductController@sauverproduit');
-Route::get('/edit_produit/{id}','App\Http\Controllers\PoductController@edit_produit')->name('produit.edit');
+Route::get('/editproduit/{id}','App\Http\Controllers\PoductController@editproduit');
 Route::post('/modifierproduit','App\Http\Controllers\PoductController@modifierproduit');
 Route::get('/deleteproduit/{id}','App\Http\Controllers\PoductController@deleteproduit');
 Route::get('/desactiver_produit/{id}','App\Http\Controllers\PoductController@desactiver_produit');

@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Client;
+use App\Cart;
+use Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Stripe\Charge;
+use Stripe\Stripe;
+
 class ClientController extends Controller
 {
     //
@@ -17,31 +25,178 @@ class ClientController extends Controller
     }
 
 
-
+//pour afficher notre panier
     function cart(){
-        return view ('client.cart');
+        if(!Session::has('cart')){
+            return view('client.cart');
+        }
+
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        return view('client.cart', ['products' => $cart->items]);
+    
+        //return view ('client.cart');
     }
+
+
 
 
     function shop(){
-        $categorie=category::get();
+        $categories=category::get();
         $product=Product::where('status',1)->get();
-        return view ('client.shop')->with('categorie',$categorie)->with('product',$product);
+        return view ('client.shop')->with('categories',$categories)->with('product',$product);
     }
+
 
     function select_by_cat($name){
-        $categorie=category::get()->with('product',$product);
+        $categories=Category::get();
         $product=Product::where('product_category',$name)->where('status',1)->get();
-        return view ('client.shop')->with('product',$product);
+        return view  ('client.shop')->with('product',$product)->with('categories',$categories);
     }
 
-    function checkout(){
-        return view ('client.checkout');
+   //*****pour ajouter des produits au panier****** */
+    function ajouter_au_panier($id){
+        $products=Product::find($id);
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->add($products, $id);
+        Session::put('cart', $cart);
+        //dd(Session::get('cart'));
+       return redirect('/shop');
     }
+
+    function retirer_produit($id){
+        
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+       
+        if(count($cart->items) > 0){
+            Session::put('cart', $cart);
+        }
+        else{
+            Session::forget('cart');
+        }
+
+        //dd(Session::get('cart'));
+        return redirect::to('/cart');
+    }
+
+        
+    //********pour modifier la quantite de produit ajoutee au panier********* */
+    function modifier_panier(Request $request, $id){
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->updateQty($id, $request->quantity);
+        Session::put('cart', $cart);
+        //dd(Session::get('cart'));
+        return redirect::to('/cart');
+    }
+
+
+       //***pour acceder a la page paiement**** */
+    function checkout(){
+       
+        if (!Session::has('client')) {
+            # code...
+            return view ('client.login');
+        }
+        if (!Session::has('cart')) {
+            # code...
+            return view ('client.cart');
+        }
+        return view ('client.checkout');
+       }
+
+
+
+       function payer(Request $request){
+        
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        
+        Stripe::setApiKey('sk_test_51LMxEzEbkqWBGaKiqPSJApwwbOOqVMvJKO86EaeBFFOsO8kI7LUmsyBfAXifKH1KDDUQUMQcFa3nbsuZu2lwEdMc005POgJelo');
+        try{
+
+
+            $charge = Charge::create(array(
+                "amount" => $cart->totalPrice * 100,
+                "currency" => "usd",
+                "source" => $request->input('stripeToken'), // obtainded with Stripe.js
+                "description" => "Test Charge"
+            ));
+
+          
+
+        } catch(\Exception $e){
+            Session::put('error', $e->getMessage());
+            return redirect('/checkout');
+        }
+
+        Session::forget('cart');
+        //Session::put('success', 'Purchase accomplished successfully !');
+        return redirect::to('/cart')->witth('status','achat accompli avec succes');
+       }
+
+       
+
+
+
+  //**pour acceder a la page signup** */
     function signup(){
         return view ('client.signup');
     }
-    function login(){
+
+  //**pour acceder a la page login** */
+ function login(){
         return view ('client.login');
     }
+
+   //***pour creer un compte*** */
+    function creer_compte(Request $request){
+        $this->validate($request, ['email' => 'email|required|unique:clients', 
+                                    'password' => 'required|min:4']);
+          $client = new client();
+        $client->email = $request->input('email');
+        $client->password = bcrypt($request->input('password'));
+        $client->save();
+        return back()->with ('status','compte bien creer');
+    }
+
+
+  //**pour acceder a son compte***/
+    
+    function acceder_compte(Request $request){
+        $this->validate($request, ['email' => 'email|required',
+                                    'password' =>'required']);
+
+                                    $client=Client::where('email',$request->input('email'))->first();
+                                    
+                                    if ($client) {
+                                        # code...
+                                        if (Hash::check($request->input('password'),$client->password )) {
+                                            # code...
+                                            Session::put('client',$client);
+                                            return redirect ('/shop');
+                                        } else {
+                                            # code...
+                                        return back()->with ('status','mauvais mot de pass ou email ');
+
+                                        }
+                                        
+                                    } else {
+                                        # code...
+                                        return back()->with ('status','vous n\'avez pas compte ');
+
+                                    }
+                                    
+          }
+
+  //pour se deconnecter//
+          function logout(){
+           Session::forget('client');
+            return back();
+        }
+
+         
 }

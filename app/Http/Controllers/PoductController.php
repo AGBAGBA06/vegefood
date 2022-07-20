@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Support\Facades\Storage;
 use App\Models;
 use App\Models\Category;
 use App\Models\Product;
@@ -13,9 +14,12 @@ class PoductController extends Controller
 {
     //
     public function products(){
-        $utilisateurs= Product::get();
-        return view('admin.products')->with('utilisateurs', $utilisateurs);
+        $produits= Product::get();
+        return view('admin.products')->with('produits', $produits);
     }
+
+
+
 
     public function ajouterproduit(){
       $categories=Category::All()->pluck('category_name','category_name');
@@ -24,113 +28,121 @@ class PoductController extends Controller
 
     //pour l'ajout
     public function sauverproduit(Request $request){
-        //$this->validate($request, [''=>'required|unique:utilisateur']);
-        $this->validate($request, ['nom'=>'required|unique:products',
+         $this->validate($request, ['nom'=>'required|unique:products',
                                     'prix'=>'required',
-                                    //  'groupe_utilisateur '=>'required',
-                                    // 'mot_de_passe'=>'required',
-                                    // 'email'=>'required',
+                                    'product_category'=>'required',
                                     'status'=>'required',
-                                    'utilisateur_image'=>'image|nullable|max:1999']);
+                                    'product_image'=>'image|nullable|max:1999']);
 
-                                    if($request->hasFile('utilisateur_image')){
+                                    if($request->hasFile('product_image')){
                                        //1-select image with extension
-                                       $fileNameWithExt=$request->file('utilisateur_image')->getClientOriginalName();
+                                       $fileNameWithExt=$request->file('product_image')->getClientOriginalName();
                                        //2-get just file name
                                        $fileName=pathinfo($fileNameWithExt,PATHINFO_FILENAME);
                                        //3-get just extension
-                                        $extension = $request->file('utilisateur_image')->getClientOriginalExtension();
+                                        $extension = $request->file('product_image')->getClientOriginalExtension();
                                        //4-file name store
                                        $fileNametostore=$fileName.'_'.time().'.'.$extension;
                                        //uplaoder l'image
-                                       $path=$request->file('utilisateur_image')->storeAs('public/utilisateur_images',
+                                       $path=$request->file('product_image')->storeAs('public/product_images',
                                                   $fileNametostore);
                                     }
                                     else{
                                         
                                         $fileNametostore='noimage.jpg';
                                     }
-                                    $utilisateur=new Product();
-                                    $utilisateur->nom=$request->input('nom');
-                                    $utilisateur->prix=$request->input('prix');
-                                    // $utilisateur->groupe_utilisateur=$request->input('groupe_utilisateur');
-                                    // $utilisateur->mot_de_passe=$request->input('mot_de_passe');
-                                    // $utilisateur->email=$request->input('email');
+                                    $produit=new Product();
+                                    $produit->nom=$request->input('nom');
+                                    $produit->prix=$request->input('prix');
+                                    $produit->product_category=$request->input('product_category');
+                                    // $produit->mot_de_passe=$request->input('mot_de_passe');
+                                    // $produit->email=$request->input('email');
                                     
                                     // $product->product_category=$request->input('product_category');
-                                    $utilisateur->utilisateur_image=$fileNametostore;
-                                    $utilisateur->status=1;
-                                    $utilisateur->save();
+                                    $produit->product_image=$fileNametostore;
+                                    $produit->status=1;
+                                    $produit->save();
                                     return redirect('/ajouterproduit')->with('status','le  produit  '
-                                                       .$utilisateur->nom.'  a ete bien ajoute');
+                                                       .$produit->nom.'  a ete bien ajoute');
                                  
                                 }
     
-     //pour la modification
-     public function edit_produit($id){
-        $utilisateur= Product::find($id);
-        // $groupeutilisateurs=Utilisateur::All()->pluck('nom','nom');
+     //pour editer
+     public function editproduit($id){
+        $product= Product::find($id);
+       $produit=Product::All()->pluck('nom','nom');
+       $categories=Category::All()->pluck('category_name','category_name');
 
 
-        return view ('admin.edit_produit')->with('utilisateur',$utilisateur);
+        return view ('admin.editproduit')->with('product',$product)->with('categories',$categories);
 
+        
          }
-         public function modifiermodifier(Request $request){
+         
+         public function modifierproduit(Request $request){
             $this->validate($request, ['nom'=>'required',
-                                        'prix'=>'required',
-                                        // 'mot_de_passe'=>'required',
-                                        // 'email'=>'required',
-                                        'utilisateur_image'=>'image|nullable|max:1999']);
+                                      'prix'=>'required',
+                                    'product_category'=>'required',
+                                    'product_image'=>'image|nullable|max:1999']);
                                         
-            $utilisateur= Product::find($request->input('id'));
-            $utilisateur->nom=$request->input('nom');
-            $utilisateur->prix=$request->input('prix');
-            // $utilisateur->mot_de_passe=$request->input('mot_de_passe');
-            // $utilisateur->email=$request->input('email');
-            // dd($utilisateur);
-            if($request->hasFile('utilisateur_image')){
+            $produit= Product::find($request->input('id'));
+            $produit->nom=$request->input('nom');
+            $produit->prix=$request->input('prix');
+            $produit->product_category=$request->input('product_category');
+            
+            if($request->hasFile('product_image')){
                 //1-select image with extension
-                $fileNameWithExt=$request->file('utilisateur_image')->getClientOriginalName();
+                $fileNameWithExt=$request->file('product_image')->getClientOriginalName();
                 //2-get just file name
                 $fileName=pathinfo($fileNameWithExt,PATHINFO_FILENAME);
                 //3-get just extension
-                 $extension = $request->file('utilisateur_image')->getClientOriginalExtension();
+                 $extension = $request->file('product_image')->getClientOriginalExtension();
                 //4-file name store
                 $fileNametostore=$fileName.'_'.time().'.'.$extension;
                 //uplaoder l'image
-                $path=$request->file('utilisateur_image')->storeAs('public/utilisateur_images',
+                $path=$request->file('product_image')->storeAs('public/product_images',
                            $fileNametostore);
 
-                           if ($utilisateur->utilisateur_image!='noimage.jpg') {
-                            Storage::delete('public/utilisateur_images/'.$utilisateur->image);
+                           if ($product->produit_image!='noimage.jpg') {
+                            Storage::delete('public/product_images/'.$produit->image);
                            
                            }
-                           $utilisateur->utilisateur_image=$fileNametostore;
+                           $produit->product_image=$fileNametostore;
              }
 
 
-            $utilisateur->update();
+            $produit->update();
             return redirect('/products')->with('status',
-          'le produit '.$utilisateur->nom.' a ete bien modifier');
+          'le produit '.$produit->nom.' a ete bien modifier');
          }
 
+
+
+         public function deleteproduit($id)    {
+        $produit = Product::find($id);
+        $produit->delete();
+        return redirect('/produits')->with(
+            'status',
+            'la produit' . $produit->nom. 'a ete bien supprimer'
+        );
+    }
     
         //pour activer un produit
-public function activer_produit($id){
-    $utilisateur= Product::find($id);
-    $utilisateur->status=1;
-        $utilisateur->update();
+ public function activer_produit($id){
+    $produit= Product::find($id);
+    $produit->status=1;
+        $produit->update();
         return redirect('/products')->with('status',
-        'le produit '.$utilisateur->nom.' a ete bien desactiver');
+        'le produit '.$produit->nom.' a ete bien desactiver');
         
         //pour desactiver un produit
     }
      public function desactiver_produit($id){
-        $utilisateur= Product::find($id);
-        $utilisateur->status=0;
-        $utilisateur->update();
+        $produit= Product::find($id);
+        $produit->status=0;
+        $produit->update();
         return redirect('/products')->with('status',
-        'la produit '.$utilisateur->nom.' a ete bien active');
+        'la produit '.$produit->nom.' a ete bien active');
 }
 
 }

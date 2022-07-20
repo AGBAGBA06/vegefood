@@ -2,6 +2,7 @@
 @section('content')
 <section id="home-section" class="hero">
 	<div class="home-slider owl-carousel">
+
 		@foreach ($slider as $sliders)
 		<div class="slider-item" style="background-image: url(/storage/slider_images/{{ $sliders->slider_image }});">
 			<div class="overlay"></div>
@@ -15,7 +16,7 @@
 			  </div>
 	
 			</div>
-		  </div>
+		  </div> 
 		</div>
 		@endforeach
 	
@@ -134,17 +135,17 @@
 			 @foreach ($product as $products)
 			 <div class="col-md-6 col-lg-3 ftco-animate">
 			 <div class="product">
-				<a href="#" class="img-prod"><img class="img-fluid" src="/storage/utilisateur_images/{{ $products->utilisateur_image }}" alt="Colorlib Template">
+				<a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $products->product_image }}" alt="Colorlib Template">
 					<span class="status">30%</span>
 					<div class="overlay"></div>
 				</a>
 				<div class="text py-3 pb-4 px-3 text-center">
-					<h3><a href="#">{{ $products->nom_utilisateur }}</a></h3>
+					<h3><a href="#">{{ $products->nom }}</a></h3>
 					<div class="d-flex">
 						<div class="pricing">
-							<p class="price"><span class="price-sale">${{$products->prenom_utilisateur}}</span></p>
+							<p class="price"><span class="price-sale">${{$products->prix}}</span></p>
 						</div>
-					</div>
+					</div> 
 					<div class="bottom-area d-flex px-3">
 						<div class="m-auto d-flex">
 							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
