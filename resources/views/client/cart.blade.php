@@ -32,8 +32,6 @@
 						  @if (Session::has('cart'))
 							  <tbody>
 								@foreach ($products as $product)
-								 
-							 
 							<tr class="text-center">
 							  <td class="product-remove"><a href="/retirer_du_panier/{{$product['product_id']}}"><span class="ion-ios-close"></span></a></td>
 							  
@@ -129,6 +127,7 @@
 			  </div>
 		  </div>
 		  </div>
+		  
 	  </section>
 @endsection
  <!-- end content -->

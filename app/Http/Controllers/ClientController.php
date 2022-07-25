@@ -7,12 +7,19 @@ use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Contact;
 use App\Cart;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Stripe\Charge;
 use Stripe\Stripe;
+use App\Order;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\ContactMail;
+
+
 
 class ClientController extends Controller
 {
@@ -25,7 +32,46 @@ class ClientController extends Controller
     }
 
 
-//pour afficher notre panier
+    function contact(){
+           return view ('client.contact');
+       }
+
+    
+        
+        // function sendEmail(Request $request){
+        //     $this->validate($request, ['email' => 'email|required', 
+        //                                     'nom' => 'required',
+        //                                 'subject' => 'required',
+        //                                 'message' => 'required']);
+        //       $client = new contact();
+        //       $client->nom = $request->input('nom');
+        //     $client->email = $request->input('email');
+        //     $client->subject = $request->input('subject');
+        //     $client->message= $request->input('message');
+        //     $client->save();
+       // return back()->with ('status','message bien envoyer');
+        //     return view ('client.contact')->with('status','message envoye avec succes');
+        // }
+
+
+        function sendEmail(Request $request){
+           $details=[
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'subject'=>$request->subject,
+            'message'=>$request->message
+           ];
+           
+           Mail::to('agbagbaameyo@gmail.com')->send(new ContactMail($details));
+            return back()->with ('status','message bien envoyer');
+            //return view ('client.contact')->with('status','message envoye avec succes');
+        }
+
+
+
+
+         
+ //pour afficher notre panier
     function cart(){
         if(!Session::has('cart')){
             return view('client.cart');
@@ -115,8 +161,8 @@ class ClientController extends Controller
         $oldCart = Session::has('cart')? Session::get('cart'):null;
         $cart = new Cart($oldCart);
         
-        Stripe::setApiKey('sk_test_51LMxEzEbkqWBGaKiqPSJApwwbOOqVMvJKO86EaeBFFOsO8kI7LUmsyBfAXifKH1KDDUQUMQcFa3nbsuZu2lwEdMc005POgJelo');
-        try{
+        Stripe::setApiKey('sk_test_gHGtV3Z6vh4jCV25BRju3hCv');
+        try {
 
 
             $charge = Charge::create(array(
@@ -126,11 +172,26 @@ class ClientController extends Controller
                 "description" => "Test Charge"
             ));
 
-          
+          $order=new Order();
+          $order->nom=$request->input('nom');
+          $order->adresse=$request->input('adresse');
+          $order->panier=serialize('$cart');
+          $order->payment_id=$charge->id;
+          $order->save();
 
+          $orders=Order::where('payment_id',$charge->id)->get();
+          $orders->transform(function($order,$key){
+            $order->panier=unserialize($order->panier);
+        return $order;
+    });
+
+    $email=Session::get('client')->email;
+    Mail::to($email)->send(new SendMail($orders));
+
+              
         } catch(\Exception $e){
-            Session::put('error', $e->getMessage());
-            return redirect('/checkout');
+            //Session::put('error', $e->getMessage());
+            return redirect('/checkout')->with('error', $e->getMessage());
         }
 
         Session::forget('cart');

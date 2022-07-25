@@ -2,11 +2,16 @@
 @section('title')
 Commandes
 @endsection
-
+{{Form::hidden('',$increment=1)}}
 @section('content')
 <div class="card">
         <div class="card-body">
           <h4 class="card-title">Commandes</h4>
+          @if (Session::has('status'))
+          <div class="alert alert-success">
+            {{Session::get('status')}}
+          </div>
+        @endif
           <div class="row">
             <div class="col-12">
               <div class="table-responsive">
@@ -22,16 +27,19 @@ Commandes
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($orders as $order)
                     <tr>
-                        <td>1</td>
-                       <td>2012/08/03</td>
-                        <td>2012/08/03</td>
-                        <td>2012/08/03</td>
-                        <td>2012/08/03</td>
+                      <td>{{$increment}}</td>
+                       <td>{{$order->nom}}</td>
+                       <td>{{$order->adresse}}</td>
+                       <td>{{$order->panier}}</td>
+                       <td>{{$order->payment_id}}</td>
                        <td>
                           <button class="btn btn-outline-primary">View</button>
                          </td>
                     </tr>
+                    {{Form::hidden('',$increment=$increment+1)}}
+                    @endforeach
                   </tbody>
                 </table>
               </div>

@@ -8,6 +8,11 @@ use App\Models\Product;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //pour acceder a la page ajouter categorie
     public function ajoutercategorie()
     {

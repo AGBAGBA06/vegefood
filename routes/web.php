@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 });*/
 Route::get('/','App\Http\Controllers\ClientController@home');
 Route::get('/cart','App\Http\Controllers\ClientController@cart');
+Route::get('/contact','App\Http\Controllers\ClientController@contact');
+Route::post('/sendEmail','App\Http\Controllers\ClientController@sendEmail');
 Route::get('/shop','App\Http\Controllers\ClientController@shop');
 Route::get('/checkout','App\Http\Controllers\ClientController@checkout');
 Route::get('/login','App\Http\Controllers\ClientController@login');
@@ -58,3 +60,7 @@ Route::get('/slider','App\Http\Controllers\SliderController@slider');
 Route::get('/activer_slider/{id}','App\Http\Controllers\SliderController@activer_slider');
 Route::get('/desactiver_slider/{id}','App\Http\Controllers\SliderController@desactiver_slider');
 Route::get('/deleteslider/{id}','App\Http\Controllers\SliderController@deleteslider');
+
+Auth::routes();
+
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
