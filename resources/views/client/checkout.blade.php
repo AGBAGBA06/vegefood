@@ -22,12 +22,13 @@
 							  @if (Session::has('error'))
                                <div class="alert alert-danger">
                                   {{Session::get('error')}}
+                                  {{Session::put('error',null)}}
 								  @endif
 					<div class="row align-items-end">
 						<div class="col-md-6">
 					  <div class="form-group">
 						  <label for="firstname">Full Name</label>
-						<input type="text" class="form-control" placeholder="" name="fullname">
+						<input type="text" class="form-control" placeholder="" name="name">
 					  </div>
 					</div>
 					<div class="col-md-12">
@@ -71,19 +72,7 @@
 					  <input type="submit" class="btn btn-primary" value="Buy now">
 					</div>
 				</div>
-
-				  <div class="w-100"></div>
-				  <div class="col-md-12">
-					  <div class="form-group mt-4">
-										  <div class="radio">
-											<label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-											<label><input type="radio" name="optradio"> Ship to different address</label>
-										  </div>
-									  </div>
 				  </div>
-				   
-				  </div>
-				  
 				</form><!-- END -->
 					  </div>
 					  <div class="col-xl-5">
@@ -107,6 +96,7 @@
 								  <p class="d-flex total-price">
 									  <span>Total</span>
 									  <span>${{Session::get('cart')->totalPrice }}</span>
+									  {{-- <span>${{Session::get('cart')->totalPrice }}</span> --}}
 								  </p>
 								  </div>
 					</div>

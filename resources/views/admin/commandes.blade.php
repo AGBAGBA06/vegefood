@@ -32,10 +32,16 @@ Commandes
                       <td>{{$increment}}</td>
                        <td>{{$order->nom}}</td>
                        <td>{{$order->adresse}}</td>
-                       <td>{{$order->panier}}</td>
+                       <td> 
+                        {{-- {{$order['nom'].','}} --}}
+                        @foreach ($order->panier->items as $item)
+                        {{$item['nom']}}
+                        @endforeach
+                      </td>
                        <td>{{$order->payment_id}}</td>
                        <td>
-                          <button class="btn btn-outline-primary">View</button>
+                          <button class="btn btn-outline-primary" onclick="window.
+                          location ='{{url('/voir_pdf/'.$order->id)}}'">View</button>
                          </td>
                     </tr>
                     {{Form::hidden('',$increment=$increment+1)}}

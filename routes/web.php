@@ -31,7 +31,10 @@ Route::get('/ajouter_au_panier/{id}','App\Http\Controllers\ClientController@ajou
 Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
 Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
 Route::post('/payer','App\Http\Controllers\ClientController@payer');
+
+
 Route::get('/logout','App\Http\Controllers\ClientController@logout');
+Route::get('/voir_pdf/{id}','App\Http\Controllers\PdfController@voir_pdf');
 
 
 Route::get('/admin','App\Http\Controllers\AdminController@dashboard');

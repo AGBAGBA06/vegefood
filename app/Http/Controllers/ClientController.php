@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Product;
@@ -14,10 +12,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Stripe\Charge;
 use Stripe\Stripe;
-use App\Order;
+use App\Models\Order;
 use Illuminate\Support\Facades\Mail;
-
 use App\Mail\ContactMail;
+use App\Mail\SendMail;
 
 
 
@@ -157,11 +155,13 @@ class ClientController extends Controller
 
 
        function payer(Request $request){
-        
+        if(!Session::has('cart')){
+            return view('client.cart');
+        }
         $oldCart = Session::has('cart')? Session::get('cart'):null;
         $cart = new Cart($oldCart);
         
-        Stripe::setApiKey('sk_test_gHGtV3Z6vh4jCV25BRju3hCv');
+        Stripe::setApiKey('sk_test_51LMxEzEbkqWBGaKiqPSJApwwbOOqVMvJKO86EaeBFFOsO8kI7LUmsyBfAXifKH1KDDUQUMQcFa3nbsuZu2lwEdMc005POgJelo');
         try {
 
 
@@ -173,8 +173,8 @@ class ClientController extends Controller
             ));
 
           $order=new Order();
-          $order->nom=$request->input('nom');
-          $order->adresse=$request->input('adresse');
+          $order->nom=$request->input('name');
+          $order->adresse=$request->input('address');
           $order->panier=serialize('$cart');
           $order->payment_id=$charge->id;
           $order->save();
@@ -190,8 +190,8 @@ class ClientController extends Controller
 
               
         } catch(\Exception $e){
-            //Session::put('error', $e->getMessage());
-            return redirect('/checkout')->with('error', $e->getMessage());
+            Session::put('error', $e->getMessage());
+            return redirect('/checkout');
         }
 
         Session::forget('cart');

@@ -60,8 +60,13 @@
 							</tr><!-- END TR-->
 
 							@endforeach
-							  </tbody>
-						  @endif
+							  </tbody> 
+							  @else
+							  @if (Session::has('status'))
+								  <div class="alert alert-success" > {{Session::get('status')}} </div>
+							 
+							  @endif
+						    @endif
 						</table>
 					</div>
 			  </div>
@@ -120,7 +125,7 @@
 					  <hr>
 					  <p class="d-flex total-price">
 						  <span>Total</span>
-						  <span>${{Session::get('cart')->totalPrice }}</span>
+						  <span>$</span>
 					  </p>
 				  </div>
 				  <p><a href="{{URL::to('/checkout')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
