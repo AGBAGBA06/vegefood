@@ -27,6 +27,7 @@ Route::get('/signup','App\Http\Controllers\ClientController@signup');
 Route::post('/creer_compte','App\Http\Controllers\ClientController@creer_compte');
 Route::post('/acceder_compte','App\Http\Controllers\ClientController@acceder_compte');
 Route::get('/select_by_cat/{name}','App\Http\Controllers\ClientController@select_by_cat');
+Route::get('/retirer_du_panier/{id}','App\Http\Controllers\ClientController@retirer_produit');
 Route::get('/ajouter_au_panier/{id}','App\Http\Controllers\ClientController@ajouter_au_panier');
 Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
 Route::post('/modifier_qty/{id}','App\Http\Controllers\ClientController@modifier_panier');
