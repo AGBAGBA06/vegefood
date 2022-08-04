@@ -28,7 +28,7 @@ class PdfController extends Controller
 
         foreach($orders as $order){
             $nom = $order->nom;
-            $addresse = $order->addresse;
+            $addresse = $order->adresse;
             $date = $order->created_at;
         }
 

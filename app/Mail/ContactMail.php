@@ -29,7 +29,7 @@ public $details;
     public function build()
     {
         return $this->from('agbagbaameyo@gmail.com')->subject('message bien envoye')->view
-        ('emails.ContactMail')->with('details',$this->details);
+        ('emails.ContactMail')->with('details', $this->details);
 
         //return $this->subject('Contact Message')->view('emails.ContactMail');
     }

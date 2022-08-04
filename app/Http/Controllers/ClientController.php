@@ -34,36 +34,34 @@ class ClientController extends Controller
            return view ('client.contact');
        }
 
-    
-        
+            //  function sendEmail(Request $request){
+            //      $this->validate($request, ['email' => 'email|required', 
+            //                                      'nom' => 'required',
+            //                                  'subject' => 'required',
+            //                                  'message' => 'required']);
+            //        $client = new contact();
+            //        $client->nom = $request->input('nom');
+            //      $client->email = $request->input('email');
+            //      $client->subject = $request->input('subject');
+            //      $client->message= $request->input('message');
+            //      $client->save();
+            //  return back()->with ('status','message bien envoyer');
+            //      return view ('client.contact')->with('status','message envoye avec succes');
+            //     }
+
+
         // function sendEmail(Request $request){
-        //     $this->validate($request, ['email' => 'email|required', 
-        //                                     'nom' => 'required',
-        //                                 'subject' => 'required',
-        //                                 'message' => 'required']);
-        //       $client = new contact();
-        //       $client->nom = $request->input('nom');
-        //     $client->email = $request->input('email');
-        //     $client->subject = $request->input('subject');
-        //     $client->message= $request->input('message');
-        //     $client->save();
-       // return back()->with ('status','message bien envoyer');
+        //    $details=[
+        //     'name'=>$request->name,
+        //     'email'=>$request->email,
+        //     'subject'=>$request->subject,
+        //     'message'=>$request->message
+        //    ];
+           
+        //    Mail::to('agbagbaameyo@gmail.com')->send(new ContactMail($details));
+        //     //return back()->with ('status','message bien envoyer');
         //     return view ('client.contact')->with('status','message envoye avec succes');
         // }
-
-
-        function sendEmail(Request $request){
-           $details=[
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'subject'=>$request->subject,
-            'message'=>$request->message
-           ];
-           
-           Mail::to('agbagbaameyo@gmail.com')->send(new ContactMail($details));
-            return back()->with ('status','message bien envoyer');
-            //return view ('client.contact')->with('status','message envoye avec succes');
-        }
 
 
 
@@ -175,13 +173,13 @@ class ClientController extends Controller
           $order=new Order();
           $order->nom=$request->input('name');
           $order->adresse=$request->input('address');
-          $order->panier=serialize('$cart');
+          $order->panier=serialize($cart);
           $order->payment_id=$charge->id;
           $order->save();
 
           $orders=Order::where('payment_id',$charge->id)->get();
-          $orders->transform(function($order,$key){
-            $order->panier=unserialize($order->panier);
+          $orders->transform (function($order,$key){
+            $order->panier= serialize($order->panier);
         return $order;
     });
 
@@ -196,7 +194,7 @@ class ClientController extends Controller
 
         Session::forget('cart');
         //Session::put('success', 'Purchase accomplished successfully !');
-        return redirect::to('/cart')->witth('status','achat accompli avec succes');
+        return redirect::to('/cart')->with('status','achat accompli avec succes');
        }
 
        

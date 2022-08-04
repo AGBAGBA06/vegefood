@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','App\Http\Controllers\ClientController@home');
 Route::get('/cart','App\Http\Controllers\ClientController@cart');
 Route::get('/contact','App\Http\Controllers\ClientController@contact');
-Route::post('/sendEmail','App\Http\Controllers\ClientController@sendEmail');
+//Route::post('/sendEmail','App\Http\Controllers\ClientController@sendEmail');
 Route::get('/shop','App\Http\Controllers\ClientController@shop');
 Route::get('/checkout','App\Http\Controllers\ClientController@checkout');
 Route::get('/login','App\Http\Controllers\ClientController@login');

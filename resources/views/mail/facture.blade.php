@@ -147,12 +147,10 @@
                 <td>
                     Payment Method
                 </td>
-                
                 <td>
                     Check #
                 </td>
             </tr>
-            
             <tr class="details">
                 <td>
                     Credit cards
@@ -179,7 +177,7 @@
                     </td>
                 </tr>
                 @foreach ($orders as $order)
-                    @foreach ($order->cart->items as $item)
+                    @foreach ($order->panier->items as $item)
                     <tr class="item">
                         <td>
                             {{$item['nom']}}
@@ -195,8 +193,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>
-                           Total: $3{{$order->panier->totalPrice}}
+                           Total: ${{$order->panier->totalPrice}}
                         </td>
                     </tr>
                 @endforeach

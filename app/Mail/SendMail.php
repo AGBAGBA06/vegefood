@@ -30,7 +30,7 @@ public $orders;
     public function build()
     {
         //return $this->view('view.name');
-         return $this->from('agbagbaameyo@gmail.com')->subject('Produits achetes')->view
+         return $this->from('amiagbagba@gmail.com')->subject('Produits achetes')->view
          ('mail.facture')->with('orders',$this->orders);
     }
 }

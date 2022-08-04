@@ -21,9 +21,11 @@ Commandes
                         <th>Order #</th>
                         <th>Nom du client</th>
                        <th>Adresse</th>
-                       <th>pannier</th>
+                       
                       <th>payment id</th>
-                        <th>Actions</th>
+                        <th>Actions
+                        3800 - 34000
+                        </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -35,12 +37,23 @@ Commandes
                        <td> 
                         {{-- {{$order['nom'].','}} --}}
                         @foreach ($order->panier->items as $item)
+                        <table>
+                          <tr>
+                            <td>
                         {{$item['nom']}}
+                            </td>
+                        
+                          <td>
+                            {{$item['qty']}}
+                          </td>
+                        </tr>
+                        </table>
                         @endforeach
                       </td>
                        <td>{{$order->payment_id}}</td>
                        <td>
-                          <button class="btn btn-outline-primary" onclick="window.
+                          <button class="btn btn-outline-primary" oncl
+                          ick="window.
                           location ='{{url('/voir_pdf/'.$order->id)}}'">View</button>
                          </td>
                     </tr>
