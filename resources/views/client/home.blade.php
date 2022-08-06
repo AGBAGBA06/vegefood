@@ -84,14 +84,14 @@
 							  <div class="text text-center">
 								  <h2>Vegetables</h2>
 								  <p>Protect the health of every home</p>
-								  <p><a href="#" class="btn btn-primary">Shop now</a></p>
+								  <p><a href="{{URL::to('/shop')}}" class="btn btn-primary">Shop now</a></p>
 							  </div>
 						  </div>
 					  </div>
 					  <div class="col-md-6">
 						  <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-1.jpg);">
 							  <div class="text px-3 py-1">
-								  <h2 class="mb-0"><a href="#">Fruits</a></h2>
+								  <h2 class="mb-0"><a href="frontimages">Fruits</a></h2>
 							  </div>
 						  </div>
 						  <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-2.jpg);">
@@ -106,7 +106,7 @@
 			  <div class="col-md-4">
 				  <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-3.jpg);">
 					  <div class="text px-3 py-1">
-						  <h2 class="mb-0"><a href="#">Juices</a></h2>
+						  <h2 class="mb-0"><a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $product->product_image }}" alt="Colorlib Template">Juices</a></h2>
 					  </div>		
 				  </div>
 				  <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-4.jpg);">

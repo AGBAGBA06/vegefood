@@ -21,8 +21,7 @@ Commandes
                         <th>Order #</th>
                         <th>Nom du client</th>
                        <th>Adresse</th>
-                       
-                      <th>payment id</th>
+                       <th>Panier</th>
                         <th>Actions
                         3800 - 34000
                         </th>
@@ -50,11 +49,8 @@ Commandes
                         </table>
                         @endforeach
                       </td>
-                       <td>{{$order->payment_id}}</td>
                        <td>
-                          <button class="btn btn-outline-primary" oncl
-                          ick="window.
-                          location ='{{url('/voir_pdf/'.$order->id)}}'">View</button>
+                          <button class="btn btn-outline-primary" onclick="window.location ='{{url('/voir_pdf/'.$order->id)}}'">View</button>
                          </td>
                     </tr>
                     {{Form::hidden('',$increment=$increment+1)}}

@@ -119,13 +119,12 @@ class ClientController extends Controller
         else{
             Session::forget('cart');
         }
-
         //dd(Session::get('cart'));
         return redirect::to('/cart');
     }
 
         
-    //********pour modifier la quantite de produit ajoutee au panier********* */
+    //********pour modifier la quantite de produit ajoutee au panier**********/
     function modifier_panier(Request $request, $id){
         $oldCart = Session::has('cart')? Session::get('cart'):null;
         $cart = new Cart($oldCart);
@@ -178,9 +177,10 @@ class ClientController extends Controller
           $order->save();
 
           $orders=Order::where('payment_id',$charge->id)->get();
-          $orders->transform (function($order,$key){
-            $order->panier= serialize($order->panier);
-        return $order;
+          $orders->transform (function($orders,$key){
+         $orders->panier= serialize($orders->panier);
+          return $orders;
+          
     });
 
     $email=Session::get('client')->email;
@@ -198,9 +198,6 @@ class ClientController extends Controller
        }
 
        
-
-
-
   //**pour acceder a la page signup** */
     function signup(){
         return view ('client.signup');
