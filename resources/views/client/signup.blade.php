@@ -80,7 +80,7 @@
 					</div>
 
 					<div class="text-center p-t-90">
-						<a class="txt1" href="{{URL::to('/login')}}">
+						<a class="txt1" href="{{URL::to('/loogin')}}">
 							avez vous un compte? connectez vous</a>
 						</a>
 					</div>

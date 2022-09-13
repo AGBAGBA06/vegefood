@@ -22,7 +22,7 @@ Route::get('/contact','App\Http\Controllers\ClientController@contact');
 //Route::post('/sendEmail','App\Http\Controllers\ClientController@sendEmail');
 Route::get('/shop','App\Http\Controllers\ClientController@shop');
 Route::get('/checkout','App\Http\Controllers\ClientController@checkout');
-Route::get('/login','App\Http\Controllers\ClientController@login');
+Route::get('/loogin','App\Http\Controllers\ClientController@loogin');
 Route::get('/signup','App\Http\Controllers\ClientController@signup');
 Route::post('/creer_compte','App\Http\Controllers\ClientController@creer_compte');
 Route::post('/acceder_compte','App\Http\Controllers\ClientController@acceder_compte');
@@ -67,4 +67,4 @@ Route::get('/deleteslider/{id}','App\Http\Controllers\SliderController@deletesli
 
 Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/admin', 'App\Http\Controllers\HomeController@index');

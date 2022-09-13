@@ -73,7 +73,6 @@
   </div>
 	  </div>
   </section>
-
   <section class="ftco-section ftco-category ftco-no-pt">
 	  <div class="container">
 		  <div class="row">
@@ -88,13 +87,14 @@
 							  </div>
 						  </div>
 					  </div>
-					  <div class="col-md-6">
-						  <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-1.jpg);">
+					  {{-- @foreach ($product as $products) --}}
+					  <div class="col-md-4">
+						  <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url();">
 							  <div class="text px-3 py-1">
 								  <h2 class="mb-0"><a href="frontimages">Fruits</a></h2>
 							  </div>
 						  </div>
-						  <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-2.jpg);">
+						  <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url();">
 							  <div class="text px-3 py-1">
 								  <h2 class="mb-0"><a href="#">Vegetables</a></h2>
 							  </div>
@@ -102,23 +102,9 @@
 					  </div>
 				  </div>
 			  </div>
-
-			  <div class="col-md-4">
-				  <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-3.jpg);">
-					  <div class="text px-3 py-1">
-						  <h2 class="mb-0"><a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $product->product_image }}" alt="Colorlib Template">Juices</a></h2>
-					  </div>		
-				  </div>
-				  <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-4.jpg);">
-					  <div class="text px-3 py-1">
-						  <h2 class="mb-0"><a href="#">Dried</a></h2>
-					  </div>
-				  </div>
-			  </div>
 		  </div>
 	  </div>
   </section>
-
 <section class="ftco-section">
   <div class="container">
 		  <div class="row justify-content-center mb-3 pb-3">
@@ -132,18 +118,20 @@
   <div class="container">
 	  <div class="row">
 		  
-			 @foreach ($product as $products)
+		
+		@foreach ($product as $produits)
+		
 			 <div class="col-md-6 col-lg-3 ftco-animate">
 			 <div class="product">
-				<a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $products->product_image }}" alt="Colorlib Template">
+				<a href="#" class="img-prod"><img class="img-fluid" src="/storage/product_images/{{ $produits->product_image }}" alt="Colorlib Template">
 					<span class="status">30%</span>
 					<div class="overlay"></div>
 				</a>
 				<div class="text py-3 pb-4 px-3 text-center">
-					<h3><a href="#">{{ $products->nom }}</a></h3>
+					<h3><a href="#">{{ $produits->nom }}</a></h3>
 					<div class="d-flex">
 						<div class="pricing">
-							<p class="price"><span class="price-sale">${{$products->prix}}</span></p>
+							<p class="price"><span class="price-sale">${{$produits->prix}}</span></p>
 						</div>
 					</div> 
 					<div class="bottom-area d-flex px-3">
@@ -181,7 +169,7 @@
 	  <h3><a href="#">Spinach</a></h3>
 	  <span class="price">$10 <a href="#">now $5 only</a></span>
 	  <div id="timer" class="d-flex mt-5">
-					<div class="time" id="days"></div>
+			<div class="time" id="days"></div>
 					<div class="time pl-3" id="hours"></div>
 					<div class="time pl-3" id="minutes"></div>
 					<div class="time pl-3" id="seconds"></div>

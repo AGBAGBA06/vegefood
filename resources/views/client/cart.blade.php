@@ -63,7 +63,7 @@
 							  </tbody> 
 							  @else
 							  @if (Session::has('status'))
-								  <div class="alert alert-success" > {{Session::get('status')}} </div>
+								  <div class="alert alert-success" > {{Session::get('status')}}</div>
 							 
 							  @endif
 						    @endif
@@ -124,8 +124,8 @@
 					  </p>
 					  <hr>
 					  <p class="d-flex total-price">
-						  <span>Total</span>
-						  <span>${{Session::get('cart')->totalPrice }}</span>
+						  <span>Total</span>$94738
+						  {{-- <span>${{Session::get('cart')->totalPrice }}</span> --}}
 					  </p>
 				  </div>
 				  <div class="cart-total mb-3">

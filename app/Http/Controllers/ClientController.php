@@ -106,7 +106,7 @@ class ClientController extends Controller
         //dd(Session::get('cart'));
        return redirect('/shop');
     }
-
+// pour retirer un produit du panier
     function retirer_produit($id){
         
         $oldCart = Session::has('cart')? Session::get('cart'):null;
@@ -140,7 +140,7 @@ class ClientController extends Controller
        
         if (!Session::has('client')) {
             # code...
-            return view ('client.login');
+            return view ('client.loogin');
         }
         if (!Session::has('cart')) {
             # code...
@@ -203,9 +203,9 @@ class ClientController extends Controller
         return view ('client.signup');
     }
 
-  //**pour acceder a la page login** */
- function login(){
-        return view ('client.login');
+  //**pour acceder a la page loogin** */
+ function loogin(){
+        return view ('client.loogin');
     }
 
    //***pour creer un compte*** */

@@ -85,16 +85,16 @@
 									  <span>Subtotal</span>
 									  <span>$00.60</span>
 								  </p>
-								  <p class="d-flex">
+							<p class="d-flex">
 									  <span>Delivery</span>
 									  <span>$0.00</span>
 								  </p>
-								  <p class="d-flex">
+							<p class="d-flex">
 									  <span>Discount</span>
 									  <span>$0.00</span>
 								  </p>
 								  <hr>
-								  <p class="d-flex total-price">
+							<p class="d-flex total-price">
 									  <span>Total</span>
 									  <span>${{Session::get('cart')->totalPrice }}</span>
 									  {{-- <span>${{Session::get('cart')->totalPrice }}</span> --}}
